@@ -23,7 +23,10 @@ export async function getServerSideProps(context) {
 }
 
 const Create = () => {
-  const addHome = (data) => axios.post("/api/homes", data);
+  const addHome = (data) => {
+    console.log("Create", data);
+    axios.post("/api/homes", data);
+  };
 
   return (
     <Layout>

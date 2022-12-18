@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PropTypes from "prop-types";
-import { HeartIcon } from "@heroicons/react/solid";
+import { HeartIcon } from "@heroicons/react/24/solid";
 
 const Card = ({
   id = "",

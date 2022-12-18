@@ -10,7 +10,7 @@ import { Menu, Transition } from "@headlessui/react";
 import {
   HeartIcon,
   HomeIcon,
-  LogoutIcon,
+  ArrowLeftOnRectangleIcon,
   PlusIcon,
   SparklesIcon,
   UserIcon,
@@ -35,7 +35,7 @@ const menuItems = [
   },
   {
     label: "Logout",
-    icon: LogoutIcon,
+    icon: ArrowLeftOnRectangleIcon,
     onClick: signOut,
   },
 ];
