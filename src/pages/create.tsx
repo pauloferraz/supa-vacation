@@ -1,7 +1,7 @@
-import { getSession } from 'next-auth/react';
-import axios from 'axios';
-import Layout from '@/components/Layout';
-import ListingForm from '@/components/ListingForm';
+import { getSession } from "next-auth/react";
+import axios from "axios";
+import Layout from "@/components/Layout";
+import ListingForm from "@/components/ListingForm";
 
 export async function getServerSideProps(context) {
   // Check if user is authenticated
@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: '/',
+        destination: "/",
         permanent: false,
       },
     };
@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
 }
 
 const Create = () => {
-  const addHome = data => axios.post('/api/homes', data);
+  const addHome = (data) => axios.post("/api/homes", data);
 
   return (
     <Layout>

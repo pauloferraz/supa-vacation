@@ -1,12 +1,12 @@
-import { Fragment, useState } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
-import Image from 'next/image';
-import PropTypes from 'prop-types';
-import { useSession, signOut } from 'next-auth/react';
-import AuthModal from './AuthModal';
-import { Menu, Transition } from '@headlessui/react';
+import { Fragment, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
+import PropTypes from "prop-types";
+import { useSession, signOut } from "next-auth/react";
+import AuthModal from "./AuthModal";
+import { Menu, Transition } from "@headlessui/react";
 import {
   HeartIcon,
   HomeIcon,
@@ -14,27 +14,27 @@ import {
   PlusIcon,
   SparklesIcon,
   UserIcon,
-} from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+} from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const menuItems = [
   {
-    label: 'List a new home',
+    label: "List a new home",
     icon: PlusIcon,
-    href: '/create',
+    href: "/create",
   },
   {
-    label: 'My homes',
+    label: "My homes",
     icon: HomeIcon,
-    href: '/homes',
+    href: "/homes",
   },
   {
-    label: 'Favorites',
+    label: "Favorites",
     icon: HeartIcon,
-    href: '/favorites',
+    href: "/favorites",
   },
   {
-    label: 'Logout',
+    label: "Logout",
     icon: LogoutIcon,
     onClick: signOut,
   },
@@ -45,7 +45,7 @@ const Layout = ({ children = null }) => {
 
   const { data: session, status } = useSession();
   const user = session?.user;
-  const isLoadingUser = status === 'loading';
+  const isLoadingUser = status === "loading";
 
   const [showModal, setShowModal] = useState(false);
 
@@ -67,21 +67,18 @@ const Layout = ({ children = null }) => {
         <header className="h-16 w-full shadow-md">
           <div className="h-full container mx-auto">
             <div className="h-full px-4 flex justify-between items-center space-x-4">
-              <Link href="/">
-                <a className="flex items-center space-x-1">
-                  <SparklesIcon className="shrink-0 w-8 h-8 text-rose-500" />
-                  <span className="text-xl font-semibold tracking-wide">
-                    Supa<span className="text-rose-600">Vacation</span>
-                  </span>
-                </a>
+              <Link className="flex items-center space-x-1" href="/" passHref>
+                <SparklesIcon className="shrink-0 w-8 h-8 text-rose-500" />
+                <span className="text-xl font-semibold tracking-wide">
+                  Supa<span className="text-rose-600">Vacation</span>
+                </span>
               </Link>
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => {
-                    session?.user ? router.push('/create') : openModal();
+                    session?.user ? router.push("/create") : openModal();
                   }}
-                  className="hidden sm:block hover:bg-gray-200 transition px-3 py-1 rounded-md"
-                >
+                  className="hidden sm:block hover:bg-gray-200 transition px-3 py-1 rounded-md">
                   List your home
                 </button>
                 {isLoadingUser ? (
@@ -93,7 +90,7 @@ const Layout = ({ children = null }) => {
                         {user?.image ? (
                           <Image
                             src={user?.image}
-                            alt={user?.name || 'Avatar'}
+                            alt={user?.name || "Avatar"}
                             layout="fill"
                           />
                         ) : (
@@ -109,15 +106,14 @@ const Layout = ({ children = null }) => {
                       enterTo="opacity-100 scale-100"
                       leave="transition ease-in duration-75"
                       leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95"
-                    >
+                      leaveTo="opacity-0 scale-95">
                       <Menu.Items className="absolute right-0 w-72 overflow-hidden mt-1 divide-y divide-gray-100 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="flex items-center space-x-2 py-4 px-4 mb-2">
                           <div className="shrink-0 flex items-center justify-center rounded-full overflow-hidden relative bg-gray-200 w-9 h-9">
                             {user?.image ? (
                               <Image
                                 src={user?.image}
-                                alt={user?.name || 'Avatar'}
+                                alt={user?.name || "Avatar"}
                                 layout="fill"
                               />
                             ) : (
@@ -137,21 +133,20 @@ const Layout = ({ children = null }) => {
                             ({ label, href, onClick, icon: Icon }) => (
                               <div
                                 key={label}
-                                className="px-2 last:border-t last:pt-2 last:mt-2"
-                              >
+                                className="px-2 last:border-t last:pt-2 last:mt-2">
                                 <Menu.Item>
                                   {href ? (
-                                    <Link href={href}>
-                                      <a className="flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100">
-                                        <Icon className="w-5 h-5 shrink-0 text-gray-500" />
-                                        <span>{label}</span>
-                                      </a>
+                                    <Link
+                                      className="flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100"
+                                      href={href}
+                                      passHref>
+                                      <Icon className="w-5 h-5 shrink-0 text-gray-500" />
+                                      <span>{label}</span>
                                     </Link>
                                   ) : (
                                     <button
                                       className="w-full flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100"
-                                      onClick={onClick}
-                                    >
+                                      onClick={onClick}>
                                       <Icon className="w-5 h-5 shrink-0 text-gray-500" />
                                       <span>{label}</span>
                                     </button>
@@ -168,8 +163,7 @@ const Layout = ({ children = null }) => {
                   <button
                     type="button"
                     onClick={openModal}
-                    className="ml-4 px-4 py-1 rounded-md bg-rose-600 hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 text-white transition"
-                  >
+                    className="ml-4 px-4 py-1 rounded-md bg-rose-600 hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 text-white transition">
                     Log in
                   </button>
                 )}
@@ -180,7 +174,7 @@ const Layout = ({ children = null }) => {
 
         <main className="flex-grow container mx-auto">
           <div className="px-4 py-12">
-            {typeof children === 'function' ? children(openModal) : children}
+            {typeof children === "function" ? children(openModal) : children}
           </div>
         </main>
 
