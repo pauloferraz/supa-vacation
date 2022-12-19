@@ -16,13 +16,13 @@ const Card = ({
 }) => (
   <Link className="block w-full" href={`/homes/${id}`} passHref>
     <div className="relative">
-      <div className="bg-gray-200 rounded-lg shadow overflow-hidden aspect-w-16 aspect-h-9">
+      <div className="bg-gray-200 rounded-lg shadow overflow-hidden aspect-w-16 aspect-h-12">
         {image ? (
           <Image
             src={image}
             alt={title}
-            layout="fill"
-            objectFit="cover"
+            width={300}
+            height={300}
             className="hover:opacity-80 transition"
           />
         ) : null}

@@ -14,6 +14,7 @@ import {
   PlusIcon,
   SparklesIcon,
   UserIcon,
+  UsersIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
@@ -27,6 +28,11 @@ const menuItems = [
     label: "My homes",
     icon: HomeIcon,
     href: "/homes",
+  },
+  {
+    label: "All Users",
+    icon: UsersIcon,
+    href: "/users",
   },
   {
     label: "Favorites",
@@ -91,7 +97,8 @@ const Layout = ({ children = null }) => {
                           <Image
                             src={user?.image}
                             alt={user?.name || "Avatar"}
-                            layout="fill"
+                            width={300}
+                            height={300}
                           />
                         ) : (
                           <UserIcon className="text-gray-400 w-6 h-6" />
@@ -114,7 +121,8 @@ const Layout = ({ children = null }) => {
                               <Image
                                 src={user?.image}
                                 alt={user?.name || "Avatar"}
-                                layout="fill"
+                                width={300}
+                                height={300}
                               />
                             ) : (
                               <UserIcon className="text-gray-400 w-6 h-6" />
