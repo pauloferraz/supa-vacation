@@ -15,6 +15,7 @@ import {
   SparklesIcon,
   UserIcon,
   UsersIcon,
+  LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
@@ -23,26 +24,31 @@ const menuItems = [
     label: "List a new home",
     icon: PlusIcon,
     href: "/create",
+    role: "PREMIUM",
   },
   {
     label: "My homes",
     icon: HomeIcon,
     href: "/homes",
+    role: null,
   },
   {
     label: "All Users",
     icon: UsersIcon,
     href: "/users",
+    role: null,
   },
   {
     label: "Favorites",
     icon: HeartIcon,
     href: "/favorites",
+    role: null,
   },
   {
     label: "Logout",
     icon: ArrowLeftOnRectangleIcon,
     onClick: signOut,
+    role: null,
   },
 ];
 
@@ -80,13 +86,6 @@ const Layout = ({ children = null }) => {
                 </span>
               </Link>
               <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => {
-                    session?.user ? router.push("/create") : openModal();
-                  }}
-                  className="hidden sm:block hover:bg-gray-200 transition px-3 py-1 rounded-md">
-                  List your home
-                </button>
                 {isLoadingUser ? (
                   <div className="h-8 w-[75px] bg-gray-200 animate-pulse rounded-md" />
                 ) : user ? (
@@ -138,7 +137,7 @@ const Layout = ({ children = null }) => {
 
                         <div className="py-2">
                           {menuItems.map(
-                            ({ label, href, onClick, icon: Icon }) => (
+                            ({ label, href, onClick, icon: Icon, role }) => (
                               <div
                                 key={label}
                                 className="px-2 last:border-t last:pt-2 last:mt-2">
@@ -150,12 +149,18 @@ const Layout = ({ children = null }) => {
                                       passHref>
                                       <Icon className="w-5 h-5 shrink-0 text-gray-500" />
                                       <span>{label}</span>
+                                      {role === "PREMIUM" && (
+                                        <span className="bg-yellow-100 text-yellow-800 text-[10px] flex items-center font-semibold mr-2 px-2 py-0.5 rounded">
+                                          <LockClosedIcon className="text-yellow-800 w-3 h-3 mr-1" />
+                                          PREMIUM
+                                        </span>
+                                      )}
                                     </Link>
                                   ) : (
                                     <button
                                       className="w-full flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100"
                                       onClick={onClick}>
-                                      <Icon className="w-5 h-5 shrink-0 text-gray-500" />
+                                      <Icon className="w-5 h-5 shrink-0 text-yellow-800" />
                                       <span>{label}</span>
                                     </button>
                                   )}

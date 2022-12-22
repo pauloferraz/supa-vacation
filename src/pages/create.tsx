@@ -8,7 +8,8 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   // If not, redirect to the homepage
-  if (!session) {
+  console.log(session?.user.role);
+  if (!session || session?.user.role !== "ADMIN") {
     return {
       redirect: {
         destination: "/",
