@@ -1,5 +1,5 @@
-import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';
+import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
   // Check if user is authenticated
@@ -28,6 +28,7 @@ export default async function handler(req, res) {
           beds,
           baths,
           ownerId: user.id,
+          companyId: user.companyId,
         },
       });
       res.status(200).json(home);

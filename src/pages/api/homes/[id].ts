@@ -1,8 +1,12 @@
-import { getSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';
 import { supabase } from '@/lib/supabase';
+import { getSession } from 'next-auth/react';
+import { NextApiRequest, NextApiResponse } from 'next/types';
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // Check if user is authenticated
   const session = await getSession({ req });
   if (!session) {
@@ -16,8 +20,8 @@ export default async function handler(req, res) {
   });
 
   // Check if authenticated user is the owner of this home
-  const { id } = req.query;
-  if (!user?.listedHomes?.find(home => home.id === id)) {
+  const id = req.query['id'].toString();
+  if (!user?.listedHomes?.find((home) => home.id === id)) {
     return res.status(401).json({ message: 'Unauthorized.' });
   }
 

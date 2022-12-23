@@ -1,32 +1,14 @@
-import { getSession } from 'next-auth/react';
 import Layout from '@/components/Layout';
 import { prisma } from '@/lib/prisma';
+import { User } from '@prisma/client';
+import { getSession } from 'next-auth/react';
+import { GetServerSideProps } from 'next/types';
 
-export async function getServerSideProps(context) {
-  // Check if user is authenticated
-  const session = await getSession(context);
-
-  // If not, redirect to the homepage
-  if (!session || session?.user.role !== 'SUPERADMIN') {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  // Get all homes from the authenticated user
-  const users = await prisma.user.findMany();
-  // Pass the data to the Homes component
-  return {
-    props: {
-      users: JSON.parse(JSON.stringify(users)),
-    },
-  };
+interface UsersPage {
+  users?: User[];
 }
 
-const Users = ({ users = [] }) => {
+const Users = ({ users }: UsersPage) => {
   return (
     <Layout>
       <h1 className='text-xl font-medium text-gray-800'>Your listings</h1>
@@ -50,7 +32,7 @@ const Users = ({ users = [] }) => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => {
+              {users?.map((user) => {
                 return (
                   <tr className='bg-white border-b' key={user.id}>
                     <th
@@ -72,3 +54,24 @@ const Users = ({ users = [] }) => {
 };
 
 export default Users;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+
+  if (!session || session?.user.role !== 'SUPERADMIN') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  const users = await prisma.user.findMany();
+
+  return {
+    props: {
+      users,
+    },
+  };
+};

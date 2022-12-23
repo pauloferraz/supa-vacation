@@ -1,63 +1,53 @@
-import { Fragment, useState } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-import PropTypes from "prop-types";
-import { useSession, signOut } from "next-auth/react";
-import AuthModal from "./AuthModal";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Transition } from '@headlessui/react';
 import {
+  ArrowLeftOnRectangleIcon,
   HeartIcon,
   HomeIcon,
-  ArrowLeftOnRectangleIcon,
   PlusIcon,
   SparklesIcon,
   UserIcon,
   UsersIcon,
-  LockClosedIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+} from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import { signOut, useSession } from 'next-auth/react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment, useState } from 'react';
+import AuthModal from './AuthModal';
 
 const menuItems = [
   {
-    label: "List a new home",
+    label: 'List a new home',
     icon: PlusIcon,
-    href: "/create",
-    role: "PREMIUM",
+    href: '/create',
   },
   {
-    label: "My homes",
+    label: 'My homes',
     icon: HomeIcon,
-    href: "/homes",
-    role: null,
+    href: '/homes',
   },
   {
-    label: "All Users",
+    label: 'All Users',
     icon: UsersIcon,
-    href: "/users",
-    role: null,
+    href: '/users',
   },
   {
-    label: "Favorites",
+    label: 'Favorites',
     icon: HeartIcon,
-    href: "/favorites",
-    role: null,
+    href: '/favorites',
   },
   {
-    label: "Logout",
+    label: 'Logout',
     icon: ArrowLeftOnRectangleIcon,
-    onClick: signOut,
-    role: null,
+    onClick: () => signOut,
   },
 ];
 
-const Layout = ({ children = null }) => {
-  const router = useRouter();
-
+const Layout = ({ children }) => {
   const { data: session, status } = useSession();
   const user = session?.user;
-  const isLoadingUser = status === "loading";
+  const isLoadingUser = status === 'loading';
 
   const [showModal, setShowModal] = useState(false);
 
@@ -69,98 +59,92 @@ const Layout = ({ children = null }) => {
       <Head>
         <title>SupaVacation | The Modern Dev</title>
         <meta
-          name="title"
-          content="Learn how to Build a Fullstack App with Next.js, PlanetScale & Prisma | The Modern Dev"
+          name='title'
+          content='Learn how to Build a Fullstack App with Next.js, PlanetScale & Prisma | The Modern Dev'
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className="min-h-screen flex flex-col">
-        <header className="h-16 w-full shadow-md">
-          <div className="h-full container mx-auto">
-            <div className="h-full px-4 flex justify-between items-center space-x-4">
-              <Link className="flex items-center space-x-1" href="/" passHref>
-                <SparklesIcon className="shrink-0 w-8 h-8 text-rose-500" />
-                <span className="text-xl font-semibold tracking-wide">
-                  Supa<span className="text-rose-600">Vacation</span>
+      <div className='min-h-screen flex flex-col'>
+        <header className='h-16 w-full shadow-md'>
+          <div className='h-full container mx-auto'>
+            <div className='h-full px-4 flex justify-between items-center space-x-4'>
+              <Link className='flex items-center space-x-1' href='/' passHref>
+                <SparklesIcon className='shrink-0 w-8 h-8 text-rose-500' />
+                <span className='text-xl font-semibold tracking-wide'>
+                  Supa<span className='text-rose-600'>Vacation</span>
                 </span>
               </Link>
-              <div className="flex items-center space-x-4">
+              <div className='flex items-center space-x-4'>
                 {isLoadingUser ? (
-                  <div className="h-8 w-[75px] bg-gray-200 animate-pulse rounded-md" />
+                  <div className='h-8 w-[75px] bg-gray-200 animate-pulse rounded-md' />
                 ) : user ? (
-                  <Menu as="div" className="relative z-50">
-                    <Menu.Button className="flex items-center space-x-px group">
-                      <div className="shrink-0 flex items-center justify-center rounded-full overflow-hidden relative bg-gray-200 w-9 h-9">
+                  <Menu as='div' className='relative z-50'>
+                    <Menu.Button className='flex items-center space-x-px group'>
+                      <div className='shrink-0 flex items-center justify-center rounded-full overflow-hidden relative bg-gray-200 w-9 h-9'>
                         {user?.image ? (
                           <Image
                             src={user?.image}
-                            alt={user?.name || "Avatar"}
+                            alt={user?.name || 'Avatar'}
                             width={300}
                             height={300}
                           />
                         ) : (
-                          <UserIcon className="text-gray-400 w-6 h-6" />
+                          <UserIcon className='text-gray-400 w-6 h-6' />
                         )}
                       </div>
-                      <ChevronDownIcon className="w-5 h-5 shrink-0 text-gray-500 group-hover:text-current" />
+                      <ChevronDownIcon className='w-5 h-5 shrink-0 text-gray-500 group-hover:text-current' />
                     </Menu.Button>
                     <Transition
                       as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="opacity-0 scale-95"
-                      enterTo="opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="opacity-100 scale-100"
-                      leaveTo="opacity-0 scale-95">
-                      <Menu.Items className="absolute right-0 w-72 overflow-hidden mt-1 divide-y divide-gray-100 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="flex items-center space-x-2 py-4 px-4 mb-2">
-                          <div className="shrink-0 flex items-center justify-center rounded-full overflow-hidden relative bg-gray-200 w-9 h-9">
+                      enter='transition ease-out duration-100'
+                      enterFrom='opacity-0 scale-95'
+                      enterTo='opacity-100 scale-100'
+                      leave='transition ease-in duration-75'
+                      leaveFrom='opacity-100 scale-100'
+                      leaveTo='opacity-0 scale-95'>
+                      <Menu.Items className='absolute right-0 w-72 overflow-hidden mt-1 divide-y divide-gray-100 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                        <div className='flex items-center space-x-2 py-4 px-4 mb-2'>
+                          <div className='shrink-0 flex items-center justify-center rounded-full overflow-hidden relative bg-gray-200 w-9 h-9'>
                             {user?.image ? (
                               <Image
                                 src={user?.image}
-                                alt={user?.name || "Avatar"}
+                                alt={user?.name || 'Avatar'}
                                 width={300}
                                 height={300}
                               />
                             ) : (
-                              <UserIcon className="text-gray-400 w-6 h-6" />
+                              <UserIcon className='text-gray-400 w-6 h-6' />
                             )}
                           </div>
-                          <div className="flex flex-col truncate">
+                          <div className='flex flex-col truncate'>
                             <span>{user?.name}</span>
-                            <span className="text-sm text-gray-500">
+                            <span className='text-sm text-gray-500'>
                               {user?.email}
                             </span>
                           </div>
                         </div>
 
-                        <div className="py-2">
+                        <div className='py-2'>
                           {menuItems.map(
-                            ({ label, href, onClick, icon: Icon, role }) => (
+                            ({ label, href, onClick, icon: Icon }) => (
                               <div
                                 key={label}
-                                className="px-2 last:border-t last:pt-2 last:mt-2">
+                                className='px-2 last:border-t last:pt-2 last:mt-2'>
                                 <Menu.Item>
                                   {href ? (
                                     <Link
-                                      className="flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100"
+                                      className='flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100'
                                       href={href}
                                       passHref>
-                                      <Icon className="w-5 h-5 shrink-0 text-gray-500" />
+                                      <Icon className='w-5 h-5 shrink-0 text-gray-500' />
                                       <span>{label}</span>
-                                      {role === "PREMIUM" && (
-                                        <span className="bg-yellow-100 text-yellow-800 text-[10px] flex items-center font-semibold mr-2 px-2 py-0.5 rounded">
-                                          <LockClosedIcon className="text-yellow-800 w-3 h-3 mr-1" />
-                                          PREMIUM
-                                        </span>
-                                      )}
                                     </Link>
                                   ) : (
                                     <button
-                                      className="w-full flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100"
+                                      className='w-full flex items-center space-x-2 py-2 px-4 rounded-md hover:bg-gray-100'
                                       onClick={onClick}>
-                                      <Icon className="w-5 h-5 shrink-0 text-yellow-800" />
+                                      <Icon className='w-5 h-5 shrink-0 text-yellow-800' />
                                       <span>{label}</span>
                                     </button>
                                   )}
@@ -174,9 +158,9 @@ const Layout = ({ children = null }) => {
                   </Menu>
                 ) : (
                   <button
-                    type="button"
+                    type='button'
                     onClick={openModal}
-                    className="ml-4 px-4 py-1 rounded-md bg-rose-600 hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 text-white transition">
+                    className='ml-4 px-4 py-1 rounded-md bg-rose-600 hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 text-white transition'>
                     Log in
                   </button>
                 )}
@@ -185,9 +169,9 @@ const Layout = ({ children = null }) => {
           </div>
         </header>
 
-        <main className="flex-grow container mx-auto">
-          <div className="px-4 py-12">
-            {typeof children === "function" ? children(openModal) : children}
+        <main className='flex-grow container mx-auto'>
+          <div className='px-4 py-12'>
+            {typeof children === 'function' ? children(openModal) : children}
           </div>
         </main>
 
@@ -195,10 +179,6 @@ const Layout = ({ children = null }) => {
       </div>
     </>
   );
-};
-
-Layout.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };
 
 export default Layout;
