@@ -1,5 +1,5 @@
 import { homeAdapter } from '@/adapters/home-adapter';
-import CreateForm from '@/components/CreateForm';
+import HomeForm from '@/components/HomeForm';
 import Layout from '@/components/Layout';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
@@ -14,7 +14,7 @@ const Edit = (home = null) => {
           Fill out the form below to update your home.
         </p>
         <div className='mt-8'>
-          {home ? <CreateForm initialValues={home} isNew={false} /> : null}
+          {home ? <HomeForm initialValues={home} isNew={false} /> : null}
         </div>
       </div>
     </Layout>

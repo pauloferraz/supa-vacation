@@ -20,7 +20,7 @@ const menuItems = [
   {
     label: 'List a new home',
     icon: PlusIcon,
-    href: '/create',
+    href: '/homes/create',
   },
   {
     label: 'My homes',
@@ -31,6 +31,11 @@ const menuItems = [
     label: 'All Users',
     icon: UsersIcon,
     href: '/users',
+  },
+  {
+    label: 'Companies',
+    icon: UsersIcon,
+    href: '/company',
   },
   {
     label: 'Favorites',

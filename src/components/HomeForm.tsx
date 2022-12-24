@@ -8,12 +8,12 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
 
-export interface CreateFormProps {
+export interface HomeFormProps {
   initialValues?: Home;
   isNew?: boolean;
 }
 
-const CreateFormSchema = Yup.object().shape({
+const HomeFormSchema = Yup.object().shape({
   title: Yup.string().trim().required(),
   description: Yup.string().trim().required(),
   price: Yup.number().positive().integer().min(1).required(),
@@ -22,7 +22,7 @@ const CreateFormSchema = Yup.object().shape({
   baths: Yup.number().positive().integer().min(1).required(),
 });
 
-const CreateForm = ({ initialValues, isNew = true }: CreateFormProps) => {
+const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
   const router = useRouter();
 
   const [disabled, setDisabled] = useState(false);
@@ -52,7 +52,7 @@ const CreateForm = ({ initialValues, isNew = true }: CreateFormProps) => {
       setDisabled(true);
       toastId = toast.loading('Submitting...');
 
-      axios.post('/api/homes', { ...values, image: imageUrl });
+      await axios.post('/api/homes', { ...values, image: imageUrl });
 
       toast.success('Successfully submitted', { id: toastId });
 
@@ -63,13 +63,13 @@ const CreateForm = ({ initialValues, isNew = true }: CreateFormProps) => {
     }
   };
 
-  const handleOnEditSubmit = (values: Home) => {
+  const handleOnEditSubmit = async (values: Home) => {
     let toastId;
     try {
       setDisabled(true);
       toastId = toast.loading('Submitting...');
 
-      axios.patch(`/api/homes/${initialValues.id}`, values);
+      await axios.patch(`/api/homes/${initialValues.id}`, values);
       toast.success('Successfully submitted', { id: toastId });
 
       router.push('/');
@@ -100,7 +100,7 @@ const CreateForm = ({ initialValues, isNew = true }: CreateFormProps) => {
 
       <Formik
         initialValues={initialFormValues}
-        validationSchema={CreateFormSchema}
+        validationSchema={HomeFormSchema}
         validateOnBlur={false}
         onSubmit={isNew ? handleOnSubmit : handleOnEditSubmit}>
         {({ isSubmitting, isValid }) => (
@@ -175,4 +175,4 @@ const CreateForm = ({ initialValues, isNew = true }: CreateFormProps) => {
   );
 };
 
-export default CreateForm;
+export default HomeForm;
