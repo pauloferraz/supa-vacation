@@ -1,6 +1,5 @@
 import { homeAdapter } from '@/adapters/home-adapter';
-import HomeForm from '@/components/HomeForm';
-import Layout from '@/components/Layout';
+import { HomeForm, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';

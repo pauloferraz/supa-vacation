@@ -1,3 +1,4 @@
+import { Input } from '@/components';
 import { Dialog, Transition } from '@headlessui/react';
 import {
   EnvelopeOpenIcon,
@@ -11,7 +12,6 @@ import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
-import Input from './Input';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()

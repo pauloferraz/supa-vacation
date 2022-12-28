@@ -1,7 +1,6 @@
+import { AuthModal, Header } from '@/components';
 import Head from 'next/head';
 import { useState } from 'react';
-import AuthModal from './AuthModal';
-import Header from './Header';
 
 const Layout = ({ children }) => {
   const [showModal, setShowModal] = useState(false);

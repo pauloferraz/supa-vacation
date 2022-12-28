@@ -1,3 +1,4 @@
+import { Loading } from '@/components';
 import Input from '@/components/Input';
 import { Company } from '@prisma/client';
 import axios from 'axios';
@@ -6,7 +7,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
-import { Loading } from './Loading';
 
 export interface CompanyFormProps {
   initialValues?: Company;

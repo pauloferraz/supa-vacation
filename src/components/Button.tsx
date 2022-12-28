@@ -1,6 +1,6 @@
+import { Loading } from '@/components';
 import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
-import { Loading } from './Loading';
 
 type ButtonProps = {
   label: string;
@@ -9,12 +9,7 @@ type ButtonProps = {
   toggleLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-export const Button = ({
-  href,
-  label,
-  loading,
-  toggleLoading,
-}: ButtonProps) => {
+const Button = ({ href, label, loading, toggleLoading }: ButtonProps) => {
   return (
     <Link href={href}>
       <button
@@ -26,3 +21,5 @@ export const Button = ({
     </Link>
   );
 };
+
+export default Button;

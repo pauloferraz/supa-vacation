@@ -1,5 +1,5 @@
-import ImageUpload from '@/components/ImageUpload';
-import Input from '@/components/Input';
+import { ImageUpload, Input, Loading } from '@/components';
+
 import { Home } from '@prisma/client';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
-import { Loading } from './Loading';
 
 export interface HomeFormProps {
   initialValues?: Home;

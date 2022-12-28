@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import { Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import { getSession } from 'next-auth/react';

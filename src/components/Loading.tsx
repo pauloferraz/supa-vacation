@@ -2,7 +2,7 @@ type LoadingProps = {
   text?: string;
 };
 
-export const Loading = ({ text }: LoadingProps) => {
+const Loading = ({ text }: LoadingProps) => {
   return (
     <>
       <svg
@@ -25,3 +25,5 @@ export const Loading = ({ text }: LoadingProps) => {
     </>
   );
 };
+
+export default Loading;

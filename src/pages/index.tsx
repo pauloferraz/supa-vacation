@@ -1,6 +1,5 @@
 import { homesAdapter } from '@/adapters/home-adapter';
-import Grid from '@/components/Grid';
-import Layout from '@/components/Layout';
+import { Grid, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { Home } from '@prisma/client';
 import { GetServerSideProps } from 'next/types';

@@ -1,4 +1,4 @@
-import Layout from '@/components/Layout';
+import { Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { User } from '@prisma/client';
 import axios from 'axios';

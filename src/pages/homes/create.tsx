@@ -1,5 +1,4 @@
-import HomeForm from '@/components/HomeForm';
-import Layout from '@/components/Layout';
+import { HomeForm, Layout } from '@/components';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
 

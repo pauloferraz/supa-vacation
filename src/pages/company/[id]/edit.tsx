@@ -1,6 +1,5 @@
 import { companyAdapter } from '@/adapters/company-adapter';
-import CompanyForm from '@/components/CompanyForm';
-import Layout from '@/components/Layout';
+import { CompanyForm, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';

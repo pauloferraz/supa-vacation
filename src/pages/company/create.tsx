@@ -1,5 +1,4 @@
-import CompanyForm from '@/components/CompanyForm';
-import Layout from '@/components/Layout';
+import { CompanyForm, Layout } from '@/components';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
 

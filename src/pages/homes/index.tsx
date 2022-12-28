@@ -1,6 +1,5 @@
-import { Button } from '@/components/Button';
-import Grid from '@/components/Grid';
-import Layout from '@/components/Layout';
+import { Button, Grid, Layout } from '@/components';
+
 import { prisma } from '@/lib/prisma';
 import { Home } from '@prisma/client';
 import { getSession } from 'next-auth/react';
