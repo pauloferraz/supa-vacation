@@ -2,8 +2,8 @@ import { homesAdapter } from '@/adapters';
 import { Button, Grid, Layout } from '@/components';
 
 import { prisma } from '@/lib/prisma';
+import { requireAuthentication } from '@/utils/requireAuthentication';
 import { Home } from '@prisma/client';
-import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
 import { useState } from 'react';
 
@@ -31,38 +31,33 @@ const Homes = ({ homes = [] }) => {
 export default Homes;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
+  return requireAuthentication(
+    context,
+    ['BUYER', 'ADMIN', 'SUPERADMIN'],
+    async ({ session }) => {
+      let homes: Home[] = [];
 
-  if (!session || session.user.role === 'USER') {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
+      if (session.user.role === 'SUPERADMIN') {
+        homes = await prisma.home.findMany({
+          orderBy: { createdAt: 'desc' },
+        });
+      } else {
+        if (session.user.companyId) {
+          homes = await prisma.home.findMany({
+            where: {
+              owner: { email: session.user.email },
+              company: { id: session.user.companyId },
+            },
+            orderBy: { createdAt: 'desc' },
+          });
+        }
+      }
 
-  let homes: Home[] = [];
-
-  if (session.user.role === 'SUPERADMIN') {
-    homes = await prisma.home.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
-  } else {
-    if (session.user.companyId) {
-      homes = await prisma.home.findMany({
-        where: {
-          owner: { email: session.user.email },
-          company: { id: session.user.companyId },
+      return {
+        props: {
+          homes: homesAdapter(homes),
         },
-        orderBy: { createdAt: 'desc' },
-      });
+      };
     }
-  }
-
-  return {
-    props: {
-      homes: homesAdapter(homes),
-    },
-  };
+  );
 };
