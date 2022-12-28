@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import {
   ArrowLeftOnRectangleIcon,
+  BuildingOffice2Icon,
   HeartIcon,
   HomeIcon,
   PlusIcon,
@@ -16,12 +17,19 @@ import Link from 'next/link';
 import { Fragment, useState } from 'react';
 import AuthModal from './AuthModal';
 
-const menuItems = [
-  {
-    label: 'List a new home',
-    icon: PlusIcon,
-    href: '/homes/create',
-  },
+type MenuItemProps = {
+  label: string;
+  icon: (
+    props: React.ComponentProps<'svg'> & {
+      title?: string;
+      titleId?: string;
+    }
+  ) => JSX.Element;
+  href?: string;
+  onClick?: any;
+}[];
+
+const menuItems: MenuItemProps = [
   {
     label: 'My homes',
     icon: HomeIcon,
@@ -34,7 +42,7 @@ const menuItems = [
   },
   {
     label: 'Companies',
-    icon: UsersIcon,
+    icon: BuildingOffice2Icon,
     href: '/company',
   },
   {
@@ -45,7 +53,7 @@ const menuItems = [
   {
     label: 'Logout',
     icon: ArrowLeftOnRectangleIcon,
-    onClick: () => signOut,
+    onClick: signOut,
   },
 ];
 
@@ -75,9 +83,9 @@ const Layout = ({ children }) => {
           <div className='h-full container mx-auto'>
             <div className='h-full px-4 flex justify-between items-center space-x-4'>
               <Link className='flex items-center space-x-1' href='/' passHref>
-                <SparklesIcon className='shrink-0 w-8 h-8 text-rose-500' />
+                <SparklesIcon className='shrink-0 w-8 h-8 text-blue-700' />
                 <span className='text-xl font-semibold tracking-wide'>
-                  Supa<span className='text-rose-600'>Vacation</span>
+                  Supa<span className='text-blue-700'>Vacation</span>
                 </span>
               </Link>
               <div className='flex items-center space-x-4'>
@@ -127,6 +135,7 @@ const Layout = ({ children }) => {
                             <span className='text-sm text-gray-500'>
                               {user?.email}
                             </span>
+                            <strong>{user.role}</strong>
                           </div>
                         </div>
 
@@ -165,7 +174,7 @@ const Layout = ({ children }) => {
                   <button
                     type='button'
                     onClick={openModal}
-                    className='ml-4 px-4 py-1 rounded-md bg-rose-600 hover:bg-rose-500 focus:outline-none focus:ring-4 focus:ring-rose-500 focus:ring-opacity-50 text-white transition'>
+                    className='customButton'>
                     Log in
                   </button>
                 )}

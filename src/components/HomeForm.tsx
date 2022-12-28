@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
+import { Loading } from './Loading';
 
 export interface HomeFormProps {
   initialValues?: Home;
@@ -164,8 +165,8 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
               <button
                 type='submit'
                 disabled={disabled || !isValid}
-                className='bg-rose-600 text-white py-2 px-6 rounded-md focus:outline-none focus:ring-4 focus:ring-rose-600 focus:ring-opacity-50 hover:bg-rose-500 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-rose-600'>
-                {isSubmitting ? 'Submitting...' : 'Save'}
+                className='customButton'>
+                {isSubmitting ? <Loading text='Loading' /> : 'Save'}
               </button>
             </div>
           </Form>

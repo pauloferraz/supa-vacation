@@ -9,9 +9,9 @@ const Edit = (company = null) => {
   return (
     <Layout>
       <div className='max-w-screen-sm mx-auto'>
-        <h1 className='text-xl font-medium text-gray-800'>Edit your home</h1>
+        <h1 className='text-xl font-medium text-gray-800'>Edit your company</h1>
         <p className='text-gray-500'>
-          Fill out the form below to update your home.
+          Fill out the form below to update your company.
         </p>
         <div className='mt-8'>
           {company ? (

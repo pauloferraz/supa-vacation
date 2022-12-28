@@ -1,11 +1,12 @@
 import Input from '@/components/Input';
 import { Company } from '@prisma/client';
 import axios from 'axios';
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
+import { Loading } from './Loading';
 
 export interface CompanyFormProps {
   initialValues?: Company;
@@ -56,6 +57,7 @@ const CompanyForm = ({ initialValues, isNew = true }: CompanyFormProps) => {
 
   const { ...initialFormValues } = initialValues ?? {
     name: '',
+    active: true,
   };
 
   return (
@@ -76,13 +78,17 @@ const CompanyForm = ({ initialValues, isNew = true }: CompanyFormProps) => {
                 disabled={disabled}
               />
             </div>
-
+            <div className='space-y-2'>
+              <label>
+                Está ativa? <Field type='checkbox' name='active' />
+              </label>
+            </div>
             <div className='flex justify-end'>
               <button
                 type='submit'
                 disabled={disabled || !isValid}
-                className='bg-rose-600 text-white py-2 px-6 rounded-md focus:outline-none focus:ring-4 focus:ring-rose-600 focus:ring-opacity-50 hover:bg-rose-500 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-rose-600'>
-                {isSubmitting ? 'Submitting...' : 'Save'}
+                className='customButton'>
+                {isSubmitting ? <Loading text='Loading' /> : 'Save'}
               </button>
             </div>
           </Form>

@@ -1,17 +1,26 @@
+import { Button } from '@/components/Button';
 import Grid from '@/components/Grid';
 import Layout from '@/components/Layout';
 import { prisma } from '@/lib/prisma';
 import { Home } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
+import { useState } from 'react';
 
 const Homes = ({ homes = [] }) => {
+  const [loading, setLoading] = useState(false);
   return (
     <Layout>
       <h1 className='text-xl font-medium text-gray-800'>Your listings</h1>
       <p className='text-gray-500'>
         Manage your homes and update your listings
       </p>
+      <Button
+        label='Create Home'
+        href='/homes/create'
+        toggleLoading={setLoading}
+        loading={loading}
+      />
       <div className='mt-8'>
         <Grid homes={homes} />
       </div>

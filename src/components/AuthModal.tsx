@@ -1,16 +1,16 @@
-import { Fragment, useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { signIn } from 'next-auth/react';
-import * as Yup from 'yup';
-import { toast } from 'react-hot-toast';
-import { Formik, Form } from 'formik';
 import { Dialog, Transition } from '@headlessui/react';
 import {
-  SparklesIcon,
   EnvelopeOpenIcon,
+  SparklesIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { Form, Formik } from 'formik';
+import { signIn } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Fragment, useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import * as Yup from 'yup';
 import Input from './Input';
 
 const SignInSchema = Yup.object().shape({
@@ -229,7 +229,7 @@ const AuthModal = ({ show = false, onClose = () => null }) => {
                           <button
                             type='submit'
                             disabled={disabled || !isValid}
-                            className='mt-6 w-full bg-rose-600 text-white py-2 px-8 rounded-md focus:outline-none focus:ring-4 focus:ring-rose-600 focus:ring-opacity-50 hover:bg-rose-500 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-rose-600'>
+                            className='customButton mt-6 w-full disabled:opacity-50 disabled:cursor-not-allowed'>
                             {isSubmitting
                               ? 'Loading...'
                               : `Sign ${showSignIn ? 'in' : 'up'}`}

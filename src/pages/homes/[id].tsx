@@ -27,7 +27,7 @@ const ListedHome = (home = null) => {
         }
       }
     })();
-  }, [home.id, session.user]);
+  }, [home, session]);
 
   const deleteHome = async () => {
     let toastId;
