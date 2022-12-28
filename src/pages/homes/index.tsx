@@ -1,3 +1,4 @@
+import { homesAdapter } from '@/adapters';
 import { Button, Grid, Layout } from '@/components';
 
 import { prisma } from '@/lib/prisma';
@@ -30,10 +31,8 @@ const Homes = ({ homes = [] }) => {
 export default Homes;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // Check if user is authenticated
   const session = await getSession(context);
 
-  // If not, redirect to the homepage
   if (!session || session.user.role === 'USER') {
     return {
       redirect: {
@@ -43,26 +42,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  let homes: Home[];
+  let homes: Home[] = [];
 
   if (session.user.role === 'SUPERADMIN') {
     homes = await prisma.home.findMany({
       orderBy: { createdAt: 'desc' },
     });
   } else {
-    homes = await prisma.home.findMany({
-      where: {
-        owner: { email: session.user.email },
-        company: { id: session.user.companyId },
-      },
-      orderBy: { createdAt: 'desc' },
-    });
+    if (session.user.companyId) {
+      homes = await prisma.home.findMany({
+        where: {
+          owner: { email: session.user.email },
+          company: { id: session.user.companyId },
+        },
+        orderBy: { createdAt: 'desc' },
+      });
+    }
   }
 
-  // Pass the data to the Homes component
   return {
     props: {
-      homes: JSON.parse(JSON.stringify(homes)),
+      homes: homesAdapter(homes),
     },
   };
 };

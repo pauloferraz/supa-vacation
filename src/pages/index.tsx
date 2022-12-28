@@ -25,9 +25,8 @@ export default function Page({ homes }: HomePage) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  // Get all homes
   const homes = await prisma.home.findMany();
-  // Pass the data to the Home page
+
   return {
     props: {
       homes: homesAdapter(homes),

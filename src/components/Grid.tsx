@@ -8,7 +8,7 @@ export type GridProps = {
 };
 
 const Grid = ({ homes }: GridProps) => {
-  const isEmpty = homes.length === 0;
+  const isEmpty = homes?.length === 0;
 
   return isEmpty ? (
     <p className='text-amber-700 bg-amber-100 px-4 rounded-md py-2 max-w-max inline-flex items-center space-x-1'>
