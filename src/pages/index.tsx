@@ -1,4 +1,4 @@
-import { homesAdapter } from '@/adapters/home-adapter';
+import { homesAdapter } from '@/adapters';
 import { Grid, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { Home } from '@prisma/client';

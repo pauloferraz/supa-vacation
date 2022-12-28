@@ -1,4 +1,4 @@
-import { companyAdapter } from '@/adapters/company-adapter';
+import { companyAdapter } from '@/adapters';
 import { CompanyForm, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';

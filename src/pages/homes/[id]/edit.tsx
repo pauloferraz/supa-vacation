@@ -1,4 +1,4 @@
-import { homeAdapter } from '@/adapters/home-adapter';
+import { homeAdapter } from '@/adapters';
 import { HomeForm, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
