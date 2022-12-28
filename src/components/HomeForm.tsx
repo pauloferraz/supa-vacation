@@ -52,7 +52,7 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
       setDisabled(true);
       toastId = toast.loading('Submitting...');
 
-      await axios.post('/api/homes', { ...values, image: imageUrl });
+      await axios.post('/api/homes/create', { ...values, image: imageUrl });
 
       toast.success('Successfully submitted', { id: toastId });
 
