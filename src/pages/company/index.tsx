@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import { prisma } from '@/lib/prisma';
-import { Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { Cog8ToothIcon } from '@heroicons/react/24/outline';
 import { Company } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -33,7 +33,7 @@ const Page = ({ companies }: CompanyPage) => {
                 <button
                   className='text-gray-400 w-5 h-5 ml-4'
                   onClick={() => router.push(`/company/${company.id}/edit`)}>
-                  <Cog6ToothIcon />
+                  <Cog8ToothIcon />
                 </button>
               </div>
             );

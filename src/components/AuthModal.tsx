@@ -46,7 +46,7 @@ const Confirm = ({ show = false, email = '' }) => (
           <div className='overflow-hidden transition-all transform'>
             <h3 className='text-center text-lg font-medium leading-6'>
               <div className='flex flex-col justify-center items-center space-y-4'>
-                <EnvelopeOpenIcon className='w-12 h-12 shrink-0 text-rose-500' />
+                <EnvelopeOpenIcon className='w-12 h-12 shrink-0 text-indigo-600' />
               </div>
               <p className='text-2xl font-semibold mt-2'>Confirm your email</p>
             </h3>
@@ -175,9 +175,9 @@ const AuthModal = ({ show = false, onClose = () => null }) => {
                       className='flex items-center space-x-1'
                       href='/'
                       passHref>
-                      <SparklesIcon className='shrink-0 w-8 h-8 text-rose-500' />
+                      <SparklesIcon className='shrink-0 w-8 h-8 text-indigo-600' />
                       <span className='text-xl font-semibold tracking-wide'>
-                        Supa<span className='text-rose-500'>Vacation</span>
+                        Supa<span className='text-indigo-600'>Vacation</span>
                       </span>
                     </Link>
                   </div>
@@ -246,7 +246,7 @@ const AuthModal = ({ show = false, onClose = () => null }) => {
                                     setShowSignIn(false);
                                     resetForm();
                                   }}
-                                  className='underline underline-offset-1 font-semibold text-rose-500 hover:text-rose-600 disabled:hover:text-rose-500 disabled:opacity-50 disabled:cursor-not-allowed'>
+                                  className='underline underline-offset-1 font-semibold text-indigo-600 hover:text-indigo-700 disabled:hover:text-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed'>
                                   Sign up
                                 </button>
                                 .
@@ -261,7 +261,7 @@ const AuthModal = ({ show = false, onClose = () => null }) => {
                                     setShowSignIn(true);
                                     resetForm();
                                   }}
-                                  className='underline underline-offset-1 font-semibold text-rose-500 hover:text-rose-600 disabled:hover:text-rose-500 disabled:opacity-50 disabled:cursor-not-allowed'>
+                                  className='underline underline-offset-1 font-semibold text-indigo-600 hover:text-indigo-700 disabled:hover:text-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed'>
                                   Log in
                                 </button>
                                 .

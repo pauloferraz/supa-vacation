@@ -1,7 +1,9 @@
 import { Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
+import { requireAuthentication } from '@/utils/requireAuthentication';
+import { Cog8ToothIcon } from '@heroicons/react/24/outline';
 import { User } from '@prisma/client';
-import { getSession } from 'next-auth/react';
+import Link from 'next/link';
 import { GetServerSideProps } from 'next/types';
 
 interface UsersPage {
@@ -27,6 +29,9 @@ const Users = ({ users }: UsersPage) => {
                   Nome
                 </th>
                 <th scope='col' className='py-3 px-6'>
+                  Nível
+                </th>
+                <th scope='col' className='py-3 px-6'>
                   Ações
                 </th>
               </tr>
@@ -37,11 +42,23 @@ const Users = ({ users }: UsersPage) => {
                   <tr className='bg-white border-b' key={user.id}>
                     <th
                       scope='row'
-                      className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap '>
-                      {user.email}
+                      className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap'>
+                      <div className='flex items-center justify-start'>
+                        <span
+                          className={`h-2 w-2 rounded-md mr-2 ${
+                            user.active ? `bg-green-700` : `bg-red-700`
+                          }`}
+                        />
+                        {user.email}
+                      </div>
                     </th>
                     <td className='py-4 px-6'>{user.name}</td>
-                    <td className='py-4 px-6'>Ícone</td>
+                    <td className='py-4 px-6'>{user.role}</td>
+                    <td className='py-4 px-6'>
+                      <Link href={`/users/${user.id}/edit`}>
+                        <Cog8ToothIcon className='text-gray-400 w-5 h-5' />
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
@@ -56,22 +73,17 @@ const Users = ({ users }: UsersPage) => {
 export default Users;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
+  return requireAuthentication(
+    context,
+    ['ADMIN', 'SUPERADMIN'],
+    async ({ session }) => {
+      const users = await prisma.user.findMany();
 
-  if (!session || session?.user.role !== 'SUPERADMIN') {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  const users = await prisma.user.findMany();
-
-  return {
-    props: {
-      users,
-    },
-  };
+      return {
+        props: {
+          users,
+        },
+      };
+    }
+  );
 };

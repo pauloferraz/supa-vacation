@@ -68,9 +68,9 @@ const Header = ({ openModal }: HeaderProps) => {
       <div className='h-full container mx-auto'>
         <div className='h-full px-4 flex justify-between items-center space-x-4'>
           <Link className='flex items-center space-x-1' href='/' passHref>
-            <SparklesIcon className='shrink-0 w-8 h-8 text-blue-700' />
+            <SparklesIcon className='shrink-0 w-8 h-8 text-indigo-600' />
             <span className='text-xl font-semibold tracking-wide'>
-              Supa<span className='text-blue-700'>Vacation</span>
+              Supa<span className='text-indigo-600'>Vacation</span>
             </span>
           </Link>
           <div className='flex items-center space-x-4'>

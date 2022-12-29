@@ -7,7 +7,7 @@ import { Home } from '@prisma/client';
 import { GetServerSideProps } from 'next/types';
 import { useState } from 'react';
 
-const Homes = ({ homes = [] }) => {
+const Homes = (homes: Home[] = []) => {
   const [loading, setLoading] = useState(false);
   return (
     <Layout>
