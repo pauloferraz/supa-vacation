@@ -83,9 +83,15 @@ export default NextAuth({
   adapter: PrismaAdapter(prisma),
   events: { createUser: sendWelcomeEmail },
   callbacks: {
-    async session({ session, user }) {
-      // Send properties to the client, like an access_token and user id from a provider.
+    async signIn({ user, account }) {
+      if (user.active) {
+        return true;
+      } else {
+        return false;
+      }
+    },
 
+    async session({ session, user }) {
       session.user.role = user.role;
       session.user.active = user.active;
       session.user.companyId = user.companyId;
