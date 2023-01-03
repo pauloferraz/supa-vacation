@@ -16,36 +16,38 @@ export default async function handler(
   // Retrieve the authenticated user
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    select: { listedHomes: true },
+    select: { listedProducts: true },
   });
 
-  // Check if authenticated user is the owner of this home
+  // Check if authenticated user is the owner of this product
   const id = req.query['id'].toString();
-  if (!user?.listedHomes?.find((home) => home.id === id)) {
+  if (!user?.listedProducts?.find((product) => product.id === id)) {
     return res.status(401).json({ message: 'Unauthorized.' });
   }
 
   if (req.method === 'PATCH') {
     try {
-      const home = await prisma.home.update({
+      const product = await prisma.product.update({
         where: { id },
         data: req.body,
       });
-      res.status(200).json(home);
+      res.status(200).json(product);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong' });
     }
   } else if (req.method === 'DELETE') {
     try {
-      const home = await prisma.home.delete({
+      const product = await prisma.product.delete({
         where: { id },
       });
       // Remove image from Supabase storage
-      if (home.image) {
-        const path = home.image.split(`${process.env.SUPABASE_BUCKET}/`)?.[1];
+      if (product.image) {
+        const path = product.image.split(
+          `${process.env.SUPABASE_BUCKET}/`
+        )?.[1];
         await supabase.storage.from(process.env.SUPABASE_BUCKET).remove([path]);
       }
-      res.status(200).json(home);
+      res.status(200).json(product);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong' });
     }

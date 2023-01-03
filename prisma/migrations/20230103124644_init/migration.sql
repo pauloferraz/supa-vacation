@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN', 'PREMIUM', 'SUPERADMIN');
+CREATE TYPE "Role" AS ENUM ('USER', 'BUYER', 'ADMIN', 'SUPERADMIN');
 
 -- CreateTable
 CREATE TABLE "Company" (
@@ -62,21 +62,21 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateTable
-CREATE TABLE "Home" (
+CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "image" TEXT,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
-    "guests" INTEGER NOT NULL,
-    "beds" INTEGER NOT NULL,
-    "baths" INTEGER NOT NULL,
+    "size" TEXT,
+    "color" TEXT,
+    "active" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "ownerId" TEXT NOT NULL,
     "companyId" TEXT,
 
-    CONSTRAINT "Home_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -107,7 +107,7 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Home" ADD CONSTRAINT "Home_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Home" ADD CONSTRAINT "Home_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;

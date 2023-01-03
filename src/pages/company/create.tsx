@@ -8,7 +8,7 @@ const Create = () => {
       <div className='max-w-screen-sm mx-auto'>
         <h1 className='text-xl font-medium text-gray-800'>List your company</h1>
         <p className='text-gray-500'>
-          Fill out the HomeForm below to list a new company.
+          Fill out the COMPANYForm below to list a new company.
         </p>
         <div className='mt-8'>
           <CompanyForm />

@@ -1,19 +1,21 @@
-import { homeAdapter } from '@/adapters';
-import { HomeForm, Layout } from '@/components';
+import { productAdapter } from '@/adapters';
+import { Layout, ProductForm } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
 
-const Edit = (home = null) => {
+const Edit = (product = null) => {
   return (
     <Layout>
       <div className='max-w-screen-sm mx-auto'>
-        <h1 className='text-xl font-medium text-gray-800'>Edit your home</h1>
+        <h1 className='text-xl font-medium text-gray-800'>Edit your product</h1>
         <p className='text-gray-500'>
-          Fill out the form below to update your home.
+          Fill out the form below to update your product.
         </p>
         <div className='mt-8'>
-          {home ? <HomeForm initialValues={home} isNew={false} /> : null}
+          {product ? (
+            <ProductForm initialValues={product} isNew={false} />
+          ) : null}
         </div>
       </div>
     </Layout>
@@ -40,17 +42,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // Retrieve the authenticated user
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
-    select: { listedHomes: true },
+    select: { listedproducts: true },
   });
 
-  // Check if authenticated user is the owner of this home
+  // Check if authenticated user is the owner of this product
   const id = context.params.id;
-  const home = user?.listedHomes?.find((home) => home.id === id);
-  if (!home) {
+  const product = user?.listedproducts?.find((product) => product.id === id);
+  if (!product) {
     return redirect;
   }
 
   return {
-    props: homeAdapter(home),
+    props: productAdapter(product),
   };
 };

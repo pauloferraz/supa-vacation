@@ -84,11 +84,14 @@ export default NextAuth({
   events: { createUser: sendWelcomeEmail },
   callbacks: {
     async signIn({ user, account }) {
-      if (user.active) {
-        return true;
-      } else {
-        return false;
+      if (user.role) {
+        if (user.active) {
+          return true;
+        } else {
+          return false;
+        }
       }
+      return true;
     },
 
     async session({ session, user }) {

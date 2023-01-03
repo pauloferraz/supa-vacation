@@ -1,14 +1,14 @@
-import { Home } from '@prisma/client';
+import { Product } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export type CardProps = {} & Omit<
-  Home,
+  Product,
   'companyId' | 'ownerId' | 'createdAt' | 'updatedAt' | 'description'
 >;
 
-const Card = ({ id, baths, beds, guests, image, price, title }: CardProps) => (
-  <Link className='block w-full' href={`/homes/${id}`} passHref>
+const Card = ({ id, active, color, size, image, price, title }: CardProps) => (
+  <Link className='block w-full' href={`/products/${id}`} passHref>
     <div className='relative'>
       <div className='bg-gray-200 rounded-lg shadow overflow-hidden aspect-w-16 aspect-h-12'>
         {image ? (
@@ -42,15 +42,15 @@ const Card = ({ id, baths, beds, guests, image, price, title }: CardProps) => (
     </div>
     <ol className='mt-1 inline-flex items-center space-x-1 text-gray-500'>
       <li>
-        <span>{guests ?? 0} guests</span>
+        <span>{size ?? 0} size</span>
         <span aria-hidden='true'> · </span>
       </li>
       <li>
-        <span>{beds ?? 0} beds</span>
+        <span>{color ?? 0} color</span>
         <span aria-hidden='true'> · </span>
       </li>
       <li>
-        <span>{baths ?? 0} baths</span>
+        <span>{active ?? 0} active</span>
       </li>
     </ol>
     <p className='mt-2'>

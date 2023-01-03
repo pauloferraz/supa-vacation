@@ -1,4 +1,4 @@
-import { HomeForm, Layout } from '@/components';
+import { Layout, ProductForm } from '@/components';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next/types';
 
@@ -6,12 +6,12 @@ const Create = () => {
   return (
     <Layout>
       <div className='max-w-screen-sm mx-auto'>
-        <h1 className='text-xl font-medium text-gray-800'>List your home</h1>
+        <h1 className='text-xl font-medium text-gray-800'>List your Product</h1>
         <p className='text-gray-500'>
-          Fill out the HomeForm below to list a new home.
+          Fill out the ProductForm below to list a new Product.
         </p>
         <div className='mt-8'>
-          <HomeForm />
+          <ProductForm />
         </div>
       </div>
     </Layout>
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check if user is authenticated
   const session = await getSession(context);
 
-  // If not, redirect to the homepage
+  // If not, redirect to the Productpage
   if (!session || session?.user.role !== 'SUPERADMIN') {
     return {
       redirect: {

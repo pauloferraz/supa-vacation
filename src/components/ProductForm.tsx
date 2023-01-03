@@ -1,6 +1,6 @@
 import { ImageUpload, Input, Loading } from '@/components';
 
-import { Home } from '@prisma/client';
+import { Product } from '@prisma/client';
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
@@ -8,21 +8,19 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import * as Yup from 'yup';
 
-export interface HomeFormProps {
-  initialValues?: Home;
+export interface ProductFormProps {
+  initialValues?: Product;
   isNew?: boolean;
 }
 
-const HomeFormSchema = Yup.object().shape({
+const ProductFormSchema = Yup.object().shape({
   title: Yup.string().trim().required(),
   description: Yup.string().trim().required(),
   price: Yup.number().positive().integer().min(1).required(),
-  guests: Yup.number().positive().integer().min(1).required(),
-  beds: Yup.number().positive().integer().min(1).required(),
-  baths: Yup.number().positive().integer().min(1).required(),
+  color: Yup.number().positive().integer().min(1).required(),
 });
 
-const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
+const ProductForm = ({ initialValues, isNew = true }: ProductFormProps) => {
   const router = useRouter();
 
   const [disabled, setDisabled] = useState(false);
@@ -46,13 +44,13 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
     }
   };
 
-  const handleOnSubmit = async (values: Home = null) => {
+  const handleOnSubmit = async (values: Product = null) => {
     let toastId;
     try {
       setDisabled(true);
       toastId = toast.loading('Submitting...');
 
-      await axios.post('/api/homes/create', { ...values, image: imageUrl });
+      await axios.post('/api/products/create', { ...values, image: imageUrl });
 
       toast.success('Successfully submitted', { id: toastId });
 
@@ -63,13 +61,13 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
     }
   };
 
-  const handleOnEditSubmit = async (values: Home) => {
+  const handleOnEditSubmit = async (values: Product) => {
     let toastId;
     try {
       setDisabled(true);
       toastId = toast.loading('Submitting...');
 
-      await axios.patch(`/api/homes/${initialValues.id}`, values);
+      await axios.patch(`/api/products/${initialValues.id}`, values);
       toast.success('Successfully submitted', { id: toastId });
 
       router.push('/');
@@ -84,9 +82,9 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
     title: '',
     description: '',
     price: 0,
-    guests: 1,
-    beds: 1,
-    baths: 1,
+    size: '',
+    color: 1,
+    active: 1,
   };
 
   return (
@@ -100,7 +98,7 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
 
       <Formik
         initialValues={initialFormValues}
-        validationSchema={HomeFormSchema}
+        validationSchema={ProductFormSchema}
         validateOnBlur={false}
         onSubmit={isNew ? handleOnSubmit : handleOnEditSubmit}>
         {({ isSubmitting, isValid }) => (
@@ -134,27 +132,24 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
 
               <div className='flex space-x-4'>
                 <Input
-                  name='guests'
-                  type='number'
-                  min='0'
-                  label='Guests'
-                  placeholder='2'
+                  name='size'
+                  type='text'
+                  label='size'
+                  placeholder='Size'
                   disabled={disabled}
                 />
                 <Input
-                  name='beds'
-                  type='number'
-                  min='0'
-                  label='Beds'
-                  placeholder='1'
+                  name='color'
+                  type='text'
+                  label='color'
+                  placeholder='Color'
                   disabled={disabled}
                 />
                 <Input
-                  name='baths'
-                  type='number'
-                  min='0'
-                  label='Baths'
-                  placeholder='1'
+                  name='active'
+                  type='text'
+                  label='active'
+                  placeholder='Active'
                   disabled={disabled}
                 />
               </div>
@@ -175,4 +170,4 @@ const HomeForm = ({ initialValues, isNew = true }: HomeFormProps) => {
   );
 };
 
-export default HomeForm;
+export default ProductForm;

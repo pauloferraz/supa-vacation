@@ -1,15 +1,15 @@
-import { homesAdapter } from '@/adapters';
+import { productsAdapter } from '@/adapters';
 import { Grid, Layout } from '@/components';
 import { prisma } from '@/lib/prisma';
 import { requireAuthentication } from '@/utils/requireAuthentication';
-import { Home } from '@prisma/client';
+import { Product } from '@prisma/client';
 import { GetServerSideProps } from 'next/types';
 
 interface DashboardPage {
-  homes?: Home[];
+  products?: Product[];
 }
 
-export default function Page({ homes }: DashboardPage) {
+export default function Page({ products }: DashboardPage) {
   return (
     <Layout>
       <h1 className='text-xl font-medium text-gray-800'>
@@ -19,7 +19,7 @@ export default function Page({ homes }: DashboardPage) {
         Explore some of the best places in the world
       </p>
       <div className='mt-8'>
-        <Grid homes={homes} />
+        <Grid products={products} />
       </div>
     </Layout>
   );
@@ -30,11 +30,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context,
     ['USER', 'BUYER', 'ADMIN', 'SUPERADMIN'],
     async ({ session }) => {
-      const homes = await prisma.home.findMany();
+      const products = await prisma.product.findMany();
 
       return {
         props: {
-          homes: homesAdapter(homes),
+          products: productsAdapter(products),
         },
       };
     }

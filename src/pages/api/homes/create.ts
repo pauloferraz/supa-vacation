@@ -8,30 +8,30 @@ export default async function handler(req, res) {
     return res.status(401).json({ message: 'Unauthorized.' });
   }
 
-  // Create new home
+  // Create new product
   if (req.method === 'POST') {
     try {
-      const { image, title, description, price, guests, beds, baths } =
+      const { image, title, description, price, size, color, active } =
         req.body;
 
       const user = await prisma.user.findUnique({
         where: { email: session.user.email },
       });
 
-      const home = await prisma.home.create({
+      const product = await prisma.product.create({
         data: {
           image,
           title,
           description,
           price,
-          guests,
-          beds,
-          baths,
+          size,
+          color,
+          active,
           ownerId: user.id,
           companyId: user.companyId,
         },
       });
-      res.status(200).json(home);
+      res.status(200).json(product);
     } catch (e) {
       res.status(500).json({ message: 'Something went wrong' });
     }

@@ -1,8 +1,8 @@
-import { Home } from '@prisma/client';
+import { Product } from '@prisma/client';
 
-export type HomeFull = {
+export type ProductFull = {
   owner: any;
 } & Omit<
-  Home,
+  Product,
   'companyId' | 'ownerId' | 'createdAt' | 'updatedAt' | 'description'
 >;
